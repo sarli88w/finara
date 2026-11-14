@@ -110,10 +110,30 @@ Workflow rilis berada di `.github/workflows/release.yml` dan berjalan saat tag d
 
 ### Persiapan npm
 
-1. Atur autentikasi npm untuk CI. Untuk workflow ini, buat **granular access token** di npm dengan izin publish untuk paket-paket terkait dan atur opsi **bypass 2FA** sesuai kebijakan keamanan akun/organisasi. Simpan sebagai repository secret `NPM_TOKEN` di GitHub (**Settings → Secrets and variables → Actions**). Alternatif yang lebih disarankan jika tersedia untuk akun Anda adalah trusted publishing (OIDC), yang menghindari token jangka panjang; konfigurasi trusted publisher di npm harus cocok dengan repository dan workflow.
-2. Jika memakai token, pastikan token belum kedaluwarsa/dicabut, memiliki akses ke scope `@finara-icons`, dan memenuhi kebijakan 2FA npm. `--access public` hanya mengatur visibilitas paket, bukan melewati 2FA.
-3. Pastikan nama paket tersedia di npm, versi paket-paket yang akan dirilis sudah dinaikkan, serta masing-masing `package.json` memiliki konfigurasi publik yang sesuai.
-4. Setelah workflow dan paket siap, push tag rilis:
+1. Samakan versi paket yang diterbitkan dengan tag sebelum membuat rilis. Contoh untuk `v0.1.4`:
+
+```sh
+npm version 0.1.4 --no-git-tag-version --workspace=packages/react
+npm version 0.1.4 --no-git-tag-version --workspace=packages/vue
+npm version 0.1.4 --no-git-tag-version --workspace=packages/react-native
+```
+
+Commit perubahan `package.json`/lockfile, lalu buat tag pada commit itu:
+
+```sh
+git add packages/*/package.json package-lock.json
+git commit -m "chore: release v0.1.4"
+git tag v0.1.4
+git push origin main
+git push origin v0.1.4
+```
+
+Workflow memeriksa versi workspace React, Vue, dan React Native agar sama dengan tag dan akan gagal jika tidak cocok; workflow tidak lagi mengubah versi otomatis. Gunakan tag baru yang belum pernah dipakai untuk rilis berikutnya.
+
+3. Atur autentikasi npm untuk CI. Untuk workflow ini, buat **granular access token** di npm dengan izin publish untuk paket-paket terkait dan atur opsi **bypass 2FA** sesuai kebijakan keamanan akun/organisasi. Simpan sebagai repository secret `NPM_TOKEN` di GitHub (**Settings → Secrets and variables → Actions**). Alternatif yang lebih disarankan jika tersedia untuk akun Anda adalah trusted publishing (OIDC), yang menghindari token jangka panjang; konfigurasi trusted publisher di npm harus cocok dengan repository dan workflow.
+4. Jika memakai token, pastikan token belum kedaluwarsa/dicabut, memiliki akses ke scope `@finara-icons`, dan memenuhi kebijakan 2FA npm. `--access public` hanya mengatur visibilitas paket, bukan melewati 2FA.
+5. Pastikan nama paket tersedia di npm dan masing-masing `package.json` memiliki konfigurasi publik yang sesuai.
+6. Setelah workflow dan paket siap, push tag rilis:
 
 ```sh
 git tag v0.1.0

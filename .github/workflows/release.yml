@@ -30,12 +30,19 @@ jobs:
       - name: Generate components & assets
         run: npm run generate
 
-      - name: Sync package version with git tag
+      - name: Verify package versions match git tag
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          echo "Setting package version to $VERSION across workspaces"
-          npm version "$VERSION" --no-git-tag-version --allow-same-version
-          npm version "$VERSION" --workspaces --no-git-tag-version --allow-same-version
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          import { strict as assert } from 'node:assert';
+          const expected = process.env.GITHUB_REF_NAME.replace(/^v/, '');
+          for (const file of ['packages/react/package.json', 'packages/vue/package.json', 'packages/react-native/package.json']) {
+            const pkg = JSON.parse(await readFile(file, 'utf8'));
+            assert.equal(pkg.version, expected, `${file} version must match tag v${expected}`);
+            console.log(`${pkg.name}@${pkg.version} matches tag`);
+          }
+          NODE
 
       - name: Publish to npm
         env:
