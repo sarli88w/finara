@@ -1,0 +1,12 @@
+{
+  "name": "@finara-icons/react",
+  "version": "0.1.0",
+  "description": "Finara Icons components for React and Next.js",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": ["src"],
+  "peerDependencies": { "react": ">=18" },
+  "scripts": { "build": "tsc -p tsconfig.json" },
+  "license": "MIT"
+}

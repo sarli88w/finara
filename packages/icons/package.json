@@ -1,0 +1,7 @@
+{
+  "name": "@finara-icons/icons",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Canonical SVG source files for Finara Icons",
+  "files": ["src", "dist"]
+}

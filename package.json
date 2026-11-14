@@ -1,0 +1,16 @@
+{
+  "name": "finara-icons",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cross-platform icon framework for Vue, React, React Native, PHP Composer, and CDN.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present",
+    "generate": "node scripts/generate-icons.mjs",
+    "validate": "node scripts/validate-icons.mjs"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@finara-icons/react-native",
+  "version": "0.1.0",
+  "description": "Finara Icons components for React Native",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": ["src"],
+  "peerDependencies": { "react": ">=18", "react-native-svg": ">=13" },
+  "scripts": { "build": "tsc -p tsconfig.json" },
+  "license": "MIT"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "finara/icons",
+  "description": "Finara SVG icon assets and helper for PHP / Composer",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Finara\\Icons\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=8.1"
+  }
+}
