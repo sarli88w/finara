@@ -113,19 +113,20 @@ Workflow rilis berada di `.github/workflows/release.yml` dan berjalan saat tag d
 1. Samakan versi paket yang diterbitkan dengan tag sebelum membuat rilis. Contoh untuk `v0.1.4`:
 
 ```sh
-npm version 0.1.4 --no-git-tag-version --workspace=packages/react
-npm version 0.1.4 --no-git-tag-version --workspace=packages/vue
-npm version 0.1.4 --no-git-tag-version --workspace=packages/react-native
+npm version 0.1.5 --no-git-tag-version
+npm version 0.1.5 --no-git-tag-version --workspace=packages/react
+npm version 0.1.5 --no-git-tag-version --workspace=packages/vue
+npm version 0.1.5 --no-git-tag-version --workspace=packages/react-native
 ```
 
 Commit perubahan `package.json`/lockfile, lalu buat tag pada commit itu:
 
 ```sh
 git add packages/*/package.json package-lock.json
-git commit -m "chore: release v0.1.4"
-git tag v0.1.4
+git commit -m "chore: release v0.1.5"
+git tag v0.1.5
 git push origin main
-git push origin v0.1.4
+git push origin v0.1.5
 ```
 
 Workflow memeriksa versi workspace React, Vue, dan React Native agar sama dengan tag dan akan gagal jika tidak cocok; workflow tidak lagi mengubah versi otomatis. Gunakan tag baru yang belum pernah dipakai untuk rilis berikutnya.
