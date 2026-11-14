@@ -110,9 +110,9 @@ Workflow rilis berada di `.github/workflows/release.yml` dan berjalan saat tag d
 
 ### Persiapan npm
 
-1. Buat token npm dengan izin publish yang sesuai.
-2. Tambahkan token sebagai repository secret bernama `NPM_TOKEN` di GitHub: **Settings → Secrets and variables → Actions**.
-3. Pastikan nama paket tersedia di npm, versi paket-paket yang akan dirilis sudah dinaikkan, serta masing-masing `package.json` memiliki konfigurasi publik yang sesuai, misalnya `publishConfig.access: public` untuk paket berscope.
+1. Atur autentikasi npm untuk CI. Untuk workflow ini, buat **granular access token** di npm dengan izin publish untuk paket-paket terkait dan atur opsi **bypass 2FA** sesuai kebijakan keamanan akun/organisasi. Simpan sebagai repository secret `NPM_TOKEN` di GitHub (**Settings → Secrets and variables → Actions**). Alternatif yang lebih disarankan jika tersedia untuk akun Anda adalah trusted publishing (OIDC), yang menghindari token jangka panjang; konfigurasi trusted publisher di npm harus cocok dengan repository dan workflow.
+2. Jika memakai token, pastikan token belum kedaluwarsa/dicabut, memiliki akses ke scope `@finara-icons`, dan memenuhi kebijakan 2FA npm. `--access public` hanya mengatur visibilitas paket, bukan melewati 2FA.
+3. Pastikan nama paket tersedia di npm, versi paket-paket yang akan dirilis sudah dinaikkan, serta masing-masing `package.json` memiliki konfigurasi publik yang sesuai.
 4. Setelah workflow dan paket siap, push tag rilis:
 
 ```sh
