@@ -1,6 +1,4 @@
-# Penggunaan dan publikasi Finara Icons
-
-> Status: fondasi proyek. Generator komponen tersedia, tetapi proses build dan publikasi paket ke registry publik belum disiapkan sepenuhnya. Nama paket contoh di bawah merupakan rencana dan belum tentu tersedia untuk instalasi.
+# Penggunaan Finara Icons
 
 ## Struktur proyek
 
@@ -32,7 +30,7 @@ Generator menyalin SVG ke lokasi aset Composer dan membangkitkan komponen dari S
 - Vue: `packages/vue/src/generated/`
 - React Native: `packages/react-native/src/generated/`
 
-Berkas SVG kosong dilewati untuk pembuatan komponen. Perbaiki atau hapus berkas kosong sebelum rilis publik. Jalankan kembali validasi dan generator setelah menambah atau mengubah sumber ikon.
+Berkas SVG kosong dilewati untuk pembuatan komponen. Perbaiki atau hapus berkas kosong sebelum digunakan. Jalankan kembali validasi dan generator setelah menambah atau mengubah sumber ikon.
 
 ## Menggunakan SVG pada HTML
 
@@ -46,7 +44,7 @@ Untuk ikon dekoratif gunakan `alt=""`. SVG yang digunakan melalui `<img>` tidak 
 
 ## Menggunakan adapter framework
 
-Komponen dikembangkan dari sumber SVG yang sama. Setelah adapter dikemas dan dirilis ke npm, instal paket framework yang sesuai. Nama berikut adalah nama paket yang direncanakan, bukan jaminan sudah tersedia di npm.
+Komponen dikembangkan dari sumber SVG yang sama. Setelah adapter dikemas dan dirilis ke npm, instal paket framework yang sesuai. Nama berikut adalah nama paket yang direncanakan.
 
 ### React / Next.js
 
@@ -92,86 +90,15 @@ export function Example() {
 }
 ```
 
-API komponen dan contoh di atas menjadi target penggunaan; verifikasi dengan proyek contoh setelah build dan pengujian adapter disiapkan.
-
 ## PHP / Composer
 
-Paket Composer direncanakan menggunakan nama `finara/icons`. Setelah dipublikasikan ke Packagist:
+Paket Composer direncanakan menggunakan nama `finara/icons`. Setelah tersedia di Packagist:
 
 ```sh
 composer require finara/icons
 ```
 
-Paket menyediakan helper untuk membaca ikon berdasarkan nama. Pastikan aset SVG disertakan di arsip distribusi dan lokasi aset sesuai dengan implementasi helper sebelum rilis. Hindari menyisipkan SVG dari sumber tak tepercaya tanpa sanitasi.
-
-## Auto-publish dari GitHub Actions
-
-Workflow rilis berada di `.github/workflows/release.yml` dan berjalan saat tag dengan pola `v*.*.*` didorong ke GitHub. Workflow memvalidasi SVG, menjalankan generator, lalu menerbitkan paket npm.
-
-### Persiapan npm
-
-1. Samakan versi paket yang diterbitkan dengan tag sebelum membuat rilis. Contoh untuk `v0.1.4`:
-
-```sh
-npm version 0.1.5 --no-git-tag-version
-npm version 0.1.5 --no-git-tag-version --workspace=packages/react
-npm version 0.1.5 --no-git-tag-version --workspace=packages/vue
-npm version 0.1.5 --no-git-tag-version --workspace=packages/react-native
-```
-
-Commit perubahan `package.json`/lockfile, lalu buat tag pada commit itu:
-
-```sh
-git add packages/*/package.json package-lock.json
-git commit -m "chore: release v0.1.5"
-git tag v0.1.5
-git push origin main
-git push origin v0.1.5
-```
-
-Workflow memeriksa versi workspace React, Vue, dan React Native agar sama dengan tag dan akan gagal jika tidak cocok; workflow tidak lagi mengubah versi otomatis. Gunakan tag baru yang belum pernah dipakai untuk rilis berikutnya.
-
-3. Atur autentikasi npm untuk CI. Untuk workflow ini, buat **granular access token** di npm dengan izin publish untuk paket-paket terkait dan atur opsi **bypass 2FA** sesuai kebijakan keamanan akun/organisasi. Simpan sebagai repository secret `NPM_TOKEN` di GitHub (**Settings → Secrets and variables → Actions**). Alternatif yang lebih disarankan jika tersedia untuk akun Anda adalah trusted publishing (OIDC), yang menghindari token jangka panjang; konfigurasi trusted publisher di npm harus cocok dengan repository dan workflow.
-4. Jika memakai token, pastikan token belum kedaluwarsa/dicabut, memiliki akses ke scope `@finara-icons`, dan memenuhi kebijakan 2FA npm. `--access public` hanya mengatur visibilitas paket, bukan melewati 2FA.
-5. Pastikan nama paket tersedia di npm dan masing-masing `package.json` memiliki konfigurasi publik yang sesuai.
-6. Setelah workflow dan paket siap, push tag rilis:
-
-```sh
-git tag v0.1.0
-git push origin v0.1.0
-```
-
-Workflow yang ada mencoba menerbitkan paket adapter React, Vue, React Native, serta paket SVG `@finara-icons/icons`. Periksa log Actions dan pastikan versi di tag sesuai dengan versi `package.json`. Workflow ini tidak memublikasikan paket Composer.
-
-### Packagist
-
-Packagist umumnya mengambil metadata paket Composer dari repository Git. Daftarkan paket repository di Packagist satu kali dan aktifkan GitHub integration/webhook agar tag Git baru memicu pembaruan. Pastikan `packages/composer/composer.json` valid sebagai paket mandiri dan konfigurasi distribusi aset/helper benar. Monorepo Composer subdirectory sering memerlukan konfigurasi khusus atau split repository; uji publikasi terlebih dahulu. Jangan mengasumsikan tag root `v0.1.0` otomatis menjadi versi Composer yang benar tanpa mengatur strategi versi/subdirectory.
-
-Jika memilih memicu pembaruan Packagist dari Actions, simpan token Packagist sebagai secret GitHub (misalnya `PACKAGIST_TOKEN`) dan panggil endpoint update resmi dengan nama vendor/paket yang sudah terdaftar. Jangan menaruh token di workflow atau repository. Webhook otomatis biasanya lebih sederhana.
-
-### CDN
-
-Untuk aset statis, tidak perlu job upload CDN jika sumber sudah dapat diakses publik di GitHub atau npm. Setelah tag/release tersedia, jsDelivr dapat menyajikan berkas dari repository GitHub, misalnya:
-
-```html
-<img src="https://cdn.jsdelivr.net/gh/USERNAME/REPOSITORY@v0.1.0/packages/icons/src/BankLogo/BSI.svg" alt="BSI">
-```
-
-Ganti `USERNAME` dan `REPOSITORY` dengan alamat repository sebenarnya. URL versi/tag bersifat tetap untuk konsumen; hindari `@main` pada production. CDN di atas mengambil aset langsung dari GitHub, bukan upload terpisah ke layanan CDN. Jika menginginkan domain/CDN dengan kontrol penuh, tambahkan job deploy khusus (misalnya ke Cloudflare R2/Pages atau S3) dan simpan kredensial sebagai GitHub Secrets.
-
-> Sebelum mengaktifkan publikasi otomatis, lengkapi build/test dan konfigurasi packaging. Workflow saat ini baru melakukan validasi/generasi lalu `npm publish`; uji dengan versi pra-rilis atau registry staging bila memungkinkan, dan jangan membuat tag produksi sampai semua paket benar-benar siap.
-
-## Publikasi untuk penggunaan umum
-
-Rilis publik membutuhkan distribusi terpisah untuk tiap ekosistem:
-
-1. **GitHub** — publikasikan repository, lisensi, dokumentasi, dan changelog.
-2. **npm** — bangun dan publikasikan paket React, Vue, dan React Native. Pastikan nama/scope paket tersedia, tetapkan `exports`, tipe, `files`, peer dependencies, serta uji instalasi dari proyek terpisah.
-3. **Packagist** — lengkapi `composer.json`, pastikan kelas PHP dan semua aset SVG masuk arsip, lalu tautkan repository ke Packagist.
-4. **Hosting statis/CDN** — unggah SVG dari `packages/icons/src/` ke hosting publik. Gunakan URL versi tetap, misalnya `https://cdn.example.com/1.0.0/BankLogo/BSI.svg`, bukan URL yang isinya dapat berubah tanpa versi.
-5. **CI dan rilis** — jalankan validasi, generator, build dan tes adapter secara otomatis sebelum membuat tag/rilis. Gunakan SemVer dan jaga versi paket tetap selaras.
-
-Sebelum memublikasikan, tinjau hak penggunaan dan atribusi setiap logo merek. Logo bank dan penyedia pembayaran dapat memiliki ketentuan merek dagang tersendiri; keberadaan sebuah berkas di repository tidak otomatis memberikan hak untuk mendistribusikannya.
+Pastikan aset SVG disertakan dalam distribusi paket dan lokasi aset sesuai dengan implementasi helper. Hindari menyisipkan SVG dari sumber tak tepercaya tanpa sanitasi.
 
 ## Konvensi sumber ikon
 
