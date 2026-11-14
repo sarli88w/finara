@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "description": "Canonical SVG source files for Finara Icons",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sarli88w/finara.git",
+    "directory": "packages/icons"
+  },
   "files": [
     "src",
     "dist"

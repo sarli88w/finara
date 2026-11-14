@@ -13,6 +13,10 @@
     "validate": "node scripts/validate-icons.mjs"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sarli88w/finara.git"
+  },
   "engines": {
     "node": ">=24"
   }

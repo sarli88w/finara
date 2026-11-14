@@ -2,6 +2,10 @@
   "name": "@finara-icons/react",
   "version": "0.1.0",
   "description": "Finara Icons components for React and Next.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sarli88w/finara.git"
+  },
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
