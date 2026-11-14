@@ -12,5 +12,8 @@
     "generate": "node scripts/generate-icons.mjs",
     "validate": "node scripts/validate-icons.mjs"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  }
 }

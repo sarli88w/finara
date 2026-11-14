@@ -16,7 +16,7 @@ scripts/            # Generator dan validasi ikon
 
 ## Mulai lokal
 
-Persyaratan: Node.js 18 atau lebih baru dan npm.
+Persyaratan: Node.js 24 atau lebih baru dan npm.
 
 ```sh
 npm install
