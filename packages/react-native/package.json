@@ -4,7 +4,7 @@
   "description": "Finara Icons components for React Native",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sarli88w/finara.git"
+    "url": "git+https://github.com/sarli88w/finara.git"
   },
   "type": "module",
   "main": "./src/index.ts",
