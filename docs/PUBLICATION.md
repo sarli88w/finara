@@ -42,6 +42,29 @@ Salin atau sajikan `packages/icons/src/` dari direktori publik situs, misalnya `
 
 Untuk ikon dekoratif gunakan `alt=""`. SVG yang digunakan melalui `<img>` tidak dapat diwarnai menggunakan CSS halaman; warnanya mengikuti isi berkas SVG. Jika perlu menata elemen SVG dengan CSS, sisipkan markup SVG inline dari sumber tepercaya.
 
+## Menggunakan ikon melalui CSS
+
+Paket `@finara-icons/icons` menyediakan `dist/icons.css` dan sumber SVG di `src/`. Impor CSS dari paket, lalu pilih varian berdasarkan kebutuhan:
+
+- **Full color** untuk logo bank, jaringan pembayaran, dan brand lain yang perlu mempertahankan warna resmi SVG.
+- **Monokrom** untuk ikon fungsional/UI yang perlu mengikuti `color` elemen, misalnya ikon transfer generik.
+
+```html
+<link rel="stylesheet" href="node_modules/@finara-icons/icons/dist/icons.css">
+
+<!-- Logo mempertahankan warna yang ada di SVG -->
+<span class="finara-icon finara-icon--color finara-icon-brand-bank-bca"
+      role="img" aria-label="BCA"></span>
+
+<!-- Ikon monokrom mengikuti color: currentColor -->
+<span class="finara-icon finara-icon--mono finara-icon-brand-bank-transfer"
+      aria-hidden="true"></span>
+```
+
+Nama class ikon mengikuti kategori dan nama berkas: `finara-icon-<kategori>-<nama-berkas>`. Berkas pada root `src/` memakai kategori `brand`; misalnya `visa.svg` menjadi `finara-icon-brand-visa`. Jika berkas disimpan dalam subdirektori, nama direktori menjadi kategori. Lihat `packages/icons/dist/icons.css` untuk daftar class lengkap.
+
+Varian `--color` menampilkan SVG sebagai background image sehingga warna bawaan SVG dipertahankan; warna ini tidak dapat diubah melalui `currentColor`. Varian `--mono` memakai CSS mask dan mewarnai bentuk ikon dengan `color` elemen. Pastikan file SVG dapat diakses pada URL relatif yang dirujuk CSS (`../src/...`); jika aset dipindahkan atau disajikan dari lokasi lain, sesuaikan URL aset saat publikasi.
+
 ## Menggunakan adapter framework
 
 Komponen dikembangkan dari sumber SVG yang sama. Setelah adapter dikemas dan dirilis ke npm, instal paket framework yang sesuai. Nama berikut adalah nama paket yang direncanakan.

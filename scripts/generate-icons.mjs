@@ -86,10 +86,17 @@ const css = [
   '  display: inline-block;',
   '  width: 1em;',
   '  height: 1em;',
+  '  vertical-align: -0.125em;',
+  '}',
+  '',
+  '.finara-icon--mono {',
   '  background-color: currentColor;',
   '  -webkit-mask: var(--finara-icon) center / contain no-repeat;',
   '  mask: var(--finara-icon) center / contain no-repeat;',
-  '  vertical-align: -0.125em;',
+  '}',
+  '',
+  '.finara-icon--color {',
+  '  background: var(--finara-icon) center / contain no-repeat;',
   '}',
   '',
 ];
@@ -99,6 +106,7 @@ for (const file of files) {
   const filename = parts.at(-1);
   const className = `finara-icon-${category.toLowerCase().replaceAll('_', '-')}-${filename.slice(0, -4).toLowerCase().replaceAll('_', '-')}`;
   const assetPath = file.split(sep).map(encodeURIComponent).join('/');
+  const isBrand = category === 'brand';
   css.push(`.${className} {`, `  --finara-icon: url("../src/${assetPath}");`, '}', '');
 }
 await writeFile(iconsCss, css.join('\n'));
