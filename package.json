@@ -1,6 +1,6 @@
 {
   "name": "finara-icons",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "Cross-platform icon framework for Vue, React, React Native, PHP Composer, and CDN.",
   "workspaces": [
