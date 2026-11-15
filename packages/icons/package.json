@@ -1,15 +1,21 @@
 {
   "name": "@finara-icons/icons",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Canonical SVG source files for Finara Icons",
+  "version": "1.0.0",
+  "description": "Canonical SVG icon assets and generated CSS for Finara Icons",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sarli88w/finara.git",
+    "url": "git+https://github.com/sarli88w/finara.git",
     "directory": "packages/icons"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "src",
     "dist"
-  ]
+  ],
+  "scripts": {
+    "prepack": "node ../../scripts/generate-icons.mjs"
+  }
 }

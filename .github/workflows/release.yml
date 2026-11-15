@@ -39,15 +39,16 @@ jobs:
           import { readFile } from 'node:fs/promises';
           import { strict as assert } from 'node:assert';
           const expected = process.env.GITHUB_REF_NAME.replace(/^v/, '');
-          for (const file of ['packages/react/package.json', 'packages/vue/package.json', 'packages/react-native/package.json']) {
+          for (const file of ['packages/icons/package.json', 'packages/react/package.json', 'packages/vue/package.json', 'packages/react-native/package.json']) {
             const pkg = JSON.parse(await readFile(file, 'utf8'));
             assert.equal(pkg.version, expected, `${file} version must match tag v${expected}`);
             console.log(`${pkg.name}@${pkg.version} matches tag`);
           }
           NODE
 
-      - name: Package generated Composer assets
-        run: tar -czf finara-composer-assets-${GITHUB_REF_NAME}.tar.gz -C packages/composer/dist .
+      - name: Package generated assets
+        run: |
+          tar -czf finara-composer-assets-${GITHUB_REF_NAME}.tar.gz -C packages/composer/dist .
 
       - name: Publish generated release assets
         uses: softprops/action-gh-release@v2
@@ -59,6 +60,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
+          npm publish --workspace=packages/icons --access public --provenance
           npm publish --workspace=packages/react --access public --provenance
           npm publish --workspace=packages/vue --access public --provenance
           npm publish --workspace=packages/react-native --access public --provenance

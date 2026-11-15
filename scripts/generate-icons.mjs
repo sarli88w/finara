@@ -5,7 +5,8 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const source = join(root, 'packages/icons/src');
 const composerDist = join(root, 'packages/composer/dist');
-const composerCss = join(composerDist, 'icons.css');
+const iconsDist = join(root, 'packages/icons/dist');
+const iconsCss = join(iconsDist, 'icons.css');
 const componentTargets = [
   join(root, 'packages/react/src/generated'),
   join(root, 'packages/vue/src/generated'),
@@ -77,6 +78,9 @@ for (const file of files) {
   await cp(join(source, file), destination);
 }
 
+await rm(iconsDist, { recursive: true, force: true });
+await mkdir(iconsDist, { recursive: true });
+
 const css = [
   '/* Generated from packages/icons/src by scripts/generate-icons.mjs. Do not edit by hand. */',
   '.finara-icon {',
@@ -96,7 +100,7 @@ for (const file of files) {
   const assetPath = file.split(sep).map(encodeURIComponent).join('/');
   css.push(`.${className} {`, `  --finara-icon: url("../src/${assetPath}");`, '}', '');
 }
-await writeFile(composerCss, css.join('\n'));
+await writeFile(iconsCss, css.join('\n'));
 
 for (const target of componentTargets) {
   await rm(target, { recursive: true, force: true });

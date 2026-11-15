@@ -10,7 +10,8 @@
     "build": "npm run build --workspaces --if-present",
     "clean": "npm run clean --workspaces --if-present",
     "generate": "node scripts/generate-icons.mjs",
-    "validate": "node scripts/validate-icons.mjs"
+    "validate": "node scripts/validate-icons.mjs",
+    "prepack:icons": "npm run generate"
   },
   "license": "MIT",
   "repository": {
