@@ -82,7 +82,6 @@ await rm(iconsDist, { recursive: true, force: true });
 await mkdir(iconsDist, { recursive: true });
 
 const css = [
-  '/* Generated from packages/icons/src by scripts/generate-icons.mjs. Do not edit by hand. */',
   '.finara-icon {',
   '  display: inline-block;',
   '  width: 1em;',
