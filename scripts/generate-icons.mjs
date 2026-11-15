@@ -94,7 +94,9 @@ const css = [
   '',
 ];
 for (const file of files) {
-  const [category, filename] = file.split(sep);
+  const parts = file.split(sep);
+  const category = parts.length > 1 ? parts[0] : 'brand';
+  const filename = parts.at(-1);
   const className = `finara-icon-${category.toLowerCase().replaceAll('_', '-')}-${filename.slice(0, -4).toLowerCase().replaceAll('_', '-')}`;
   const assetPath = file.split(sep).map(encodeURIComponent).join('/');
   css.push(`.${className} {`, `  --finara-icon: url("../src/${assetPath}");`, '}', '');
