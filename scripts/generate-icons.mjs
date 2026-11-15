@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const source = join(root, 'packages/icons/src');
-const targets = [join(root, 'packages/composer/icons/src')];
+const composerDist = join(root, 'packages/composer/dist');
+const composerCss = join(composerDist, 'icons.css');
 const componentTargets = [
   join(root, 'packages/react/src/generated'),
   join(root, 'packages/vue/src/generated'),
@@ -68,14 +69,34 @@ for (const file of files) {
   entries.push({ file, name, svg });
 }
 
-for (const target of targets) await mkdir(target, { recursive: true });
-for (const target of targets) {
-  for (const file of files) {
-    const destination = join(target, file);
-    await mkdir(dirname(destination), { recursive: true });
-    await cp(join(source, file), destination);
-  }
+await rm(composerDist, { recursive: true, force: true });
+await mkdir(composerDist, { recursive: true });
+for (const file of files) {
+  const destination = join(composerDist, file);
+  await mkdir(dirname(destination), { recursive: true });
+  await cp(join(source, file), destination);
 }
+
+const css = [
+  '/* Generated from packages/icons/src by scripts/generate-icons.mjs. Do not edit by hand. */',
+  '.finara-icon {',
+  '  display: inline-block;',
+  '  width: 1em;',
+  '  height: 1em;',
+  '  background-color: currentColor;',
+  '  -webkit-mask: var(--finara-icon) center / contain no-repeat;',
+  '  mask: var(--finara-icon) center / contain no-repeat;',
+  '  vertical-align: -0.125em;',
+  '}',
+  '',
+];
+for (const file of files) {
+  const [category, filename] = file.split(sep);
+  const className = `finara-icon-${category.toLowerCase().replaceAll('_', '-')}-${filename.slice(0, -4).toLowerCase().replaceAll('_', '-')}`;
+  const assetPath = file.split(sep).map(encodeURIComponent).join('/');
+  css.push(`.${className} {`, `  --finara-icon: url("../src/${assetPath}");`, '}', '');
+}
+await writeFile(composerCss, css.join('\n'));
 
 for (const target of componentTargets) {
   await rm(target, { recursive: true, force: true });

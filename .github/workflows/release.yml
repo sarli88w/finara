@@ -29,6 +29,8 @@ jobs:
 
       - name: Generate components & assets
         run: npm run generate
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
 
       - name: Verify package versions match git tag
         run: |
@@ -43,6 +45,13 @@ jobs:
             console.log(`${pkg.name}@${pkg.version} matches tag`);
           }
           NODE
+
+      - name: Publish generated release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            packages/composer/dist/**
 
       - name: Publish to npm
         env:

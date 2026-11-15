@@ -9,6 +9,15 @@
     }
   },
   "require": {
-    "php": ">=8.1"
+    "php": ">=8.5"
+  },
+  "keywords": [
+    "finara",
+    "icons",
+    "svg"
+  ],
+  "support": {
+    "issues": "https://github.com/sarli88w/finara/issues",
+    "source": "https://github.com/sarli88w/finara/tree/main/packages/composer"
   }
 }
