@@ -122,6 +122,8 @@ import BankSulutgoComponent from './generated/bank-sulutgo.vue';
 export const BankSulutgoIcon = BankSulutgoComponent;
 import BankSyariahIndonesiaComponent from './generated/bank-syariah-indonesia.vue';
 export const BankSyariahIndonesiaIcon = BankSyariahIndonesiaComponent;
+import BankTransferComponent from './generated/bank-transfer.vue';
+export const BankTransferIcon = BankTransferComponent;
 import BankVictoriaSyariahComponent from './generated/bank-victoria-syariah.vue';
 export const BankVictoriaSyariahIcon = BankVictoriaSyariahComponent;
 import BankWooriSaudaraComponent from './generated/bank-woori-saudara.vue';

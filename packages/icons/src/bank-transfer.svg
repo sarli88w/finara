@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Bank transfer">
+  <path d="M3 9h18" />
+  <path d="m4 9 8-5 8 5" />
+  <path d="M5 9v8m4-8v8m6-8v8m4-8v8" />
+  <path d="M3 17h18m-19 4h20" />
+  <path d="M7 12h2m6 0h2" />
+</svg>

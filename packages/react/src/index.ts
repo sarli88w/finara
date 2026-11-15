@@ -123,6 +123,8 @@ import BankSulutgoComponent from './generated/bank-sulutgo';
 export const BankSulutgoIcon: ComponentType<SVGProps<SVGSVGElement> & { size?: number | string }> = BankSulutgoComponent;
 import BankSyariahIndonesiaComponent from './generated/bank-syariah-indonesia';
 export const BankSyariahIndonesiaIcon: ComponentType<SVGProps<SVGSVGElement> & { size?: number | string }> = BankSyariahIndonesiaComponent;
+import BankTransferComponent from './generated/bank-transfer';
+export const BankTransferIcon: ComponentType<SVGProps<SVGSVGElement> & { size?: number | string }> = BankTransferComponent;
 import BankVictoriaSyariahComponent from './generated/bank-victoria-syariah';
 export const BankVictoriaSyariahIcon: ComponentType<SVGProps<SVGSVGElement> & { size?: number | string }> = BankVictoriaSyariahComponent;
 import BankWooriSaudaraComponent from './generated/bank-woori-saudara';

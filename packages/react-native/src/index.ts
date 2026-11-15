@@ -122,6 +122,8 @@ import BankSulutgoComponent from './generated/bank-sulutgo';
 export const BankSulutgoIcon = BankSulutgoComponent;
 import BankSyariahIndonesiaComponent from './generated/bank-syariah-indonesia';
 export const BankSyariahIndonesiaIcon = BankSyariahIndonesiaComponent;
+import BankTransferComponent from './generated/bank-transfer';
+export const BankTransferIcon = BankTransferComponent;
 import BankVictoriaSyariahComponent from './generated/bank-victoria-syariah';
 export const BankVictoriaSyariahIcon = BankVictoriaSyariahComponent;
 import BankWooriSaudaraComponent from './generated/bank-woori-saudara';
